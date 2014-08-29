@@ -1,8 +1,8 @@
 module RaceCondition
   module RSpec
     class Listener
-      SUBSCRIPTIONS = %i(example_passed example_failed example_pending
-                         dump_summary seed close)
+      SUBSCRIPTIONS = [:example_passed, :example_failed, :example_pending,
+                       :dump_summary, :seed, :close]
 
       def initialize
         @report = Report.new
