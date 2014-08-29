@@ -1,7 +1,7 @@
 language: ruby
 
 bundler_args: "--binstubs --standalone --without documentation --path ../bundle"
-script: "script/run_build"
+script: "bundle exec rspec spec"
 rvm:
   - 1.9.2
   - 1.9.3
