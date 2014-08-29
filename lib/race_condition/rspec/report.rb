@@ -26,7 +26,7 @@ module RaceCondition
       private
 
       def allow_webmock!
-        WebMock.allow_net_connect! #if Object.const_defined?("Webmock")
+        WebMock.allow_net_connect! if Object.const_defined?("WebMock")
       end
 
       def metadata

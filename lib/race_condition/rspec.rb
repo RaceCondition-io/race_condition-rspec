@@ -1,6 +1,7 @@
-require "race_condition/client"
+require "api_smith"
 require "race_condition/rspec/version"
 require "race_condition/rspec/configuration"
+require "race_condition/client"
 require "race_condition/rspec/report"
 require "race_condition/rspec/listener"
 
