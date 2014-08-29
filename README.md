@@ -1,6 +1,6 @@
-# RaceCondition::Rspec
+# RaceCondition::Rspec [![Build Status](https://travis-ci.org/RaceCondition-io/race_condition-rspec.svg?branch=master)](https://travis-ci.org/RaceCondition-io/race_condition-rspec)
 
-TODO: Write a gem description
+RSpec client for sending test suite results to RaceCondition.
 
 ## Installation
 
@@ -18,7 +18,25 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Within your `spec_helper.rb`, require `race_condition/rspec` and configure it for your CI.
+
+```ruby
+require "race_condition/rspec"
+
+RaceCondition::RSpec.configure do |c|
+  c.report_if = ENV["CI"]
+  c.codebase_id = ENV["CODEBASE_ID"]
+  c.branch_name = ENV["TRAVIS_BRANCH"]
+  c.commit = ENV["TRAVIS_COMMIT"]
+  c.build_number = ENV["TRAVIS_BUILD_NUMBER"]
+end
+```
+
+* `report_if` - This is a boolean or lambda that tells the reporter if it should test suite results to the server.  Most popular CI servers set the `CI` environment variable.
+* `codebase_id` - This is the codebase ID from RaceCondition that you want to send the results to.
+* `branch_name` - The current branch name (optional, but recommended).
+* `commit` - The commit under test (optional).
+* `build_number` - The CI's build number (optional).
 
 ## Contributing
 
