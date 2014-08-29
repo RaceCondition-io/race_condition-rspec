@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["bolandryanm@gmail.com"]
   spec.summary       = "RSpec client for sending test suite results to RaceCondition."
   spec.description   = "RSpec client for sending test suite results to RaceCondition."
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/RaceCondition-io/race_condition-rspec"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

@@ -20,7 +20,7 @@ module RaceCondition
         }
 
         allow_webmock!
-        Client.new.report!("f8e76771aef86908", data)
+        Client.new.report!(config.codebase_id, data)
       end
 
       private
@@ -30,13 +30,15 @@ module RaceCondition
       end
 
       def metadata
-        config = RaceCondition::RSpec.configuration
-
         {
           branch_name: config.branch_name,
           commit: config.commit,
           build_number: config.build_number
         }
+      end
+
+      def config
+        RaceCondition::RSpec.configuration
       end
 
       def examples
