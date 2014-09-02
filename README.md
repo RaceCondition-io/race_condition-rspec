@@ -6,15 +6,12 @@ RSpec client for sending test suite results to RaceCondition.
 
 Add this line to your application's Gemfile:
 
-    gem 'race_condition-rspec'
+    gem 'race_condition-rspec', require: false
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install race_condition-rspec
 
 ## Usage
 
