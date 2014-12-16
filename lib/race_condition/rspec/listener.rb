@@ -20,15 +20,19 @@ module RaceCondition
         @report.pending_examples << example
       end
 
-      def dump_summary(duration, example_count, failure_count, pending_count)
-        @report.duration = duration
+      def dump_summary(*args)
+        if Gem::Version.new(::RSpec::Core::Version::STRING).release >= Gem::Version.new('3.0.0')
+          @report.duration = args.first.duration
+        else
+          @report.duration = args.first
+        end
       end
 
       def seed(seed)
         @report.seed = seed
       end
 
-      def close
+      def close(*args)
         @report.broadcast!
       end
     end

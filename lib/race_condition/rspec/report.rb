@@ -52,6 +52,10 @@ module RaceCondition
       end
 
       def map_to_data_hash(example)
+        if Gem::Version.new(::RSpec::Core::Version::STRING).release >= Gem::Version.new('3.0.0')
+          example = example.example
+        end
+
         data = example.execution_result.merge({
           description: example.description,
           full_description: example.full_description,
