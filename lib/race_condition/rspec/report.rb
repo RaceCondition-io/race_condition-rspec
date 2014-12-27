@@ -35,7 +35,7 @@ module RaceCondition
           commit: config.commit,
           build_number: config.build_number
         }
-        puts "unique id: #{ENV["RC_BUILD_ID"]}"
+        puts "unique id: #{ENV['RC_BUILD_ID']}"
         metadata.merge({unique_id: ENV["RC_BUILD_ID"]}) if ENV["RC_BUILD_ID"]
         metadata
       end
