@@ -2,7 +2,7 @@ language: ruby
 
 bundler_args: "--binstubs --standalone --without documentation --path ../bundle"
 before_script:
-  - RC_BUILD_ID=`bundle exec rake builds:uuid 2>/dev/null`
+  - RC_BUILD_ID=`bundle exec rake uuid 2>/dev/null`
 script: "bundle exec rspec spec"
 rvm:
   - 1.9.3
