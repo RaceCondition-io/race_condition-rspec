@@ -2,7 +2,7 @@ module RaceCondition
   class Client
     include APISmith::Client
 
-    base_uri "http://racecondition.io/"
+    base_uri "https://racecondition.io/"
     endpoint "api/1"
 
     def report!(project_id, report_output)
