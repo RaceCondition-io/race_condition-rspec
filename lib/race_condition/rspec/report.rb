@@ -30,11 +30,13 @@ module RaceCondition
       end
 
       def metadata
-        {
+        metadata = {
           branch_name: config.branch_name,
           commit: config.commit,
           build_number: config.build_number
         }
+        metadata.merge({unique_id: ENV["RC_BUILD_ID"]}) if ENV["RC_BUILD_ID"]
+        metadata
       end
 
       def config
