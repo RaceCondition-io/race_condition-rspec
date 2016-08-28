@@ -13,10 +13,13 @@ module RaceCondition
 
       def broadcast!
         data = {
-          seed: seed,
-          duration: duration,
           examples: examples_output,
-          metadata: metadata
+          seed: seed.seed,
+          client: "race_condition-rspec",
+          duration: duration,
+          branch_name: config.branch_name,
+          commit: config.commit,
+          build_number: config.build_number
         }
 
         allow_webmock!
@@ -27,14 +30,6 @@ module RaceCondition
 
       def allow_webmock!
         WebMock.allow_net_connect! if Object.const_defined?("WebMock")
-      end
-
-      def metadata
-        {
-          branch_name: config.branch_name,
-          commit: config.commit,
-          build_number: config.build_number
-        }
       end
 
       def config
@@ -56,16 +51,19 @@ module RaceCondition
           example = example.example
         end
 
-        data = example.execution_result.merge({
-          description: example.description,
+        data = {
+          started_at: example.execution_result.started_at.iso8601,
+          finished_at: example.execution_result.finished_at.iso8601,
+          run_time: example.execution_result.run_time,
+          result: example.execution_result.status,
           full_description: example.full_description,
           file_path: example.file_path,
           location: example.location,
           type: example.metadata[:type]
-        })
+        }
 
-        if data[:exception]
-          exception = data[:exception]
+        if exception = example.exception
+          data[:rerun] = "rspec #{rerun_argument_for(example)}"
 
           data[:exception] = {
             class: exception.class.name,
@@ -75,6 +73,26 @@ module RaceCondition
         end
 
         data
+      end
+
+      # rerun logic from https://github.com/rspec/rspec-core/blob/4b0a10466cd19271bc5387bf5179bdb3b47a744d/lib/rspec/core/notifications.rb
+
+      def rerun_argument_for(example)
+        location = example.location_rerun_argument
+        return location unless duplicate_rerun_locations.include?(location)
+        example.id
+      end
+
+      def duplicate_rerun_locations
+        @duplicate_rerun_locations ||= begin
+          locations = ::RSpec.world.all_examples.map(&:location_rerun_argument)
+
+          Set.new.tap do |s|
+            locations.group_by { |l| l }.each do |l, ls|
+              s << l if ls.count > 1
+            end
+          end
+        end
       end
     end
   end

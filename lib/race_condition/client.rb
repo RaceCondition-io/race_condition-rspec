@@ -1,16 +1,17 @@
+require "net/http"
+require "uri"
+
 module RaceCondition
   class Client
-    include APISmith::Client
-
-    base_uri "https://racecondition.io/"
-    endpoint "api/1"
+    BASE_URL = "https://racecondition.io"
+    ENDPOINT = "api/1"
 
     def report!(project_id, report_output)
       return unless report?
 
       puts "Sending test run data to RaceCondition..."
-      params = { build: report_output }
-      post("projects/#{project_id}/builds", extra_body: params)
+      response = post("projects/#{project_id}/builds", report_output)
+      # TODO: handle response / check status code
     rescue Errno::ECONNREFUSED, SocketError, Net::ReadTimeout
       puts "Unable to reach RaceCondition."
     end
@@ -19,6 +20,11 @@ module RaceCondition
     end
 
     private
+
+    def post(path, params)
+      uri = URI.parse("#{BASE_URL}/#{ENDPOINT}/#{path}")
+      Net::HTTP.post_form(uri, params)
+    end
 
     def report?
       config.report?
