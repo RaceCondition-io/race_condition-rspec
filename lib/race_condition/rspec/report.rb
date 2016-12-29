@@ -52,10 +52,10 @@ module RaceCondition
         end
 
         data = {
-          started_at: example.execution_result.started_at.iso8601,
-          finished_at: example.execution_result.finished_at.iso8601,
-          run_time: example.execution_result.run_time,
-          result: example.execution_result.status,
+          started_at: example.execution_result[:started_at].iso8601,
+          finished_at: example.execution_result[:finished_at].iso8601,
+          run_time: example.execution_result[:run_time],
+          result: example.execution_result[:status],
           full_description: example.full_description,
           file_path: example.file_path,
           location: example.location,

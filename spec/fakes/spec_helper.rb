@@ -1,8 +1,10 @@
 require "race_condition/rspec.rb"
 
-class RaceCondition::Client
-  def report!(project, data)
-    puts data.to_json
+module RaceCondition
+  class Client
+    def report!(project_id, data)
+      puts data.to_json
+    end
   end
 end
 
