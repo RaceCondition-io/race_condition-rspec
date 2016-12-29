@@ -63,9 +63,8 @@ module RaceCondition
         }
 
         if exception = example.exception
-          data[:rerun] = "rspec #{rerun_argument_for(example)}"
-
           data[:exception] = {
+            rerun: "rspec #{rerun_argument_for(example)}",
             class: exception.class.name,
             message: exception.message,
             backtrace: exception.backtrace

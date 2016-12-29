@@ -1,29 +1,39 @@
 require "net/http"
-require "uri"
+require 'json'
 
 module RaceCondition
   class Client
     BASE_URL = "https://racecondition.io"
-    ENDPOINT = "api/1"
+    ENDPOINT = "api/v1"
 
     def report!(project_id, report_output)
       return unless report?
 
       puts "Sending test run data to RaceCondition..."
       response = post("projects/#{project_id}/builds", report_output)
-      # TODO: handle response / check status code
-    rescue Errno::ECONNREFUSED, SocketError, Net::ReadTimeout
-      puts "Unable to reach RaceCondition."
-    end
 
-    def check_response_errors(response)
+      unless response.code.to_i == 200
+        puts "Unable to log test results to RaceCondition."
+      end
+    rescue Errno::ECONNREFUSED, SocketError, Net::ReadTimeout => e
+      puts "Unable to reach RaceCondition."
     end
 
     private
 
     def post(path, params)
-      uri = URI.parse("#{BASE_URL}/#{ENDPOINT}/#{path}")
-      Net::HTTP.post_form(uri, params)
+      url = URI.parse("#{BASE_URL}/#{ENDPOINT}/#{path}")
+
+      http = Net::HTTP.new(url.host, url.port)
+      http.read_timeout = 5
+      http.open_timeout = 5
+
+      json_headers = {
+        "Content-Type" => "application/json",
+        "Accept" => "application/json"
+      }
+
+      http.post(url.path, params.to_json, json_headers)
     end
 
     def report?
