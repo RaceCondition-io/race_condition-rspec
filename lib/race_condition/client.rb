@@ -3,7 +3,6 @@ require 'json'
 
 module RaceCondition
   class Client
-    BASE_URL = "https://racecondition.io"
     ENDPOINT = "api/v1"
 
     def report!(project_id, report_output)
@@ -22,7 +21,7 @@ module RaceCondition
     private
 
     def post(path, params)
-      url = URI.parse("#{BASE_URL}/#{ENDPOINT}/#{path}")
+      url = URI.parse("#{base_url}/#{ENDPOINT}/#{path}")
 
       http = Net::HTTP.new(url.host, url.port)
       http.read_timeout = 5
@@ -38,6 +37,10 @@ module RaceCondition
 
     def report?
       config.report?
+    end
+
+    def base_url
+      config.report_to_domain
     end
 
     def config

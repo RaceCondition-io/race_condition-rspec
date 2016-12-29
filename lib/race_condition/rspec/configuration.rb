@@ -6,7 +6,12 @@ module RaceCondition
                     :commit,
                     :build_number,
                     :codebase_id,
-                    :report_if
+                    :report_if,
+                    :report_to_domain # for testing purposes
+
+      def initialize
+        self.report_to_domain = "https://racecondition.io"
+      end
 
       def report?
         if report_if.respond_to? :call

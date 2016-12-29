@@ -1,4 +1,4 @@
-# RaceCondition::Rspec [![Build Status](https://travis-ci.org/RaceCondition-io/race_condition-rspec.svg?branch=master)](https://travis-ci.org/RaceCondition-io/race_condition-rspec)
+# RaceCondition::RSpec [![Build Status](https://travis-ci.org/RaceCondition-io/race_condition-rspec.svg?branch=master)](https://travis-ci.org/RaceCondition-io/race_condition-rspec)
 
 RSpec client for sending test suite results to RaceCondition.
 
@@ -29,7 +29,7 @@ RaceCondition::RSpec.configure do |c|
 end
 ```
 
-* `report_if` - This is a boolean or lambda that tells the reporter if it should test suite results to the server.  Most popular CI servers set the `CI` environment variable.
+* `report_if` - This is a boolean or lambda that tells the reporter if it should send test suite results to the server.  Most popular CI servers set the `CI` environment variable.
 * `codebase_id` - This is the codebase ID from RaceCondition that you want to send the results to.
 * `branch_name` - The current branch name (optional, but recommended).
 * `commit` - The commit under test (optional).
