@@ -21,9 +21,9 @@ module RaceCondition
     private
 
     def post(path, params)
-      url = URI.parse("#{base_url}/#{ENDPOINT}/#{path}")
+      uri = URI.parse("#{base_url}/#{ENDPOINT}/#{path}")
 
-      http = Net::HTTP.new(url.host, url.port)
+      http = Net::HTTP.new(uri.host, uri.port)
       http.read_timeout = 5
       http.open_timeout = 5
       http.use_ssl = uri.scheme == 'https'
@@ -33,7 +33,7 @@ module RaceCondition
         "Accept" => "application/json"
       }
 
-      http.post(url.path, params.to_json, json_headers)
+      http.post(uri.path, params.to_json, json_headers)
     end
 
     def report?
