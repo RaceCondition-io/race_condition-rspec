@@ -26,6 +26,7 @@ module RaceCondition
       http = Net::HTTP.new(url.host, url.port)
       http.read_timeout = 5
       http.open_timeout = 5
+      http.use_ssl = uri.scheme == 'https'
 
       json_headers = {
         "Content-Type" => "application/json",
