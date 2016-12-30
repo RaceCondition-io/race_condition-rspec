@@ -1,8 +1,10 @@
 language: ruby
 
+cache: bundler
 bundler_args: "--binstubs --standalone --without documentation --path ../bundle"
+
 script: "bundle exec rspec spec"
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1.2
+  - 2.2.6
+  - 2.3.3
+  - 2.4.0
